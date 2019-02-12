@@ -7,9 +7,9 @@ public class Piece {
     public Piece() {}
 
     public Piece(Team team, PieceType pieceType, Point coordinate, GridIntf gridIntf) {
-        this.team = team;
-        this.pieceType = pieceType;
-        this.coordinate = coordinate;
+        this.setTeam(team);
+        this.setPieceType(pieceType);
+        this.setCoordinate(coordinate);
         this.gridIntf = gridIntf;
     }
 
@@ -19,13 +19,13 @@ public class Piece {
     private GridIntf gridIntf;
 
     public void draw(Graphics2D g2) {
-        if (team == Team.WHITE)
+        if (getTeam() == Team.WHITE)
             g2.setColor(Color.WHITE);
         else
             g2.setColor(Color.BLACK);
 
-        Point topLeft = gridIntf.getDrawingCoordinates(coordinate);
-        switch (pieceType) {
+        Point topLeft = gridIntf.getDrawingCoordinates(getCoordinate());
+        switch (getPieceType()) {
             case PAWN:
                 g2.fillOval(topLeft.x, topLeft.y, 50, 50);
                 break;
@@ -48,5 +48,29 @@ public class Piece {
                 g2.drawString("WHAT", topLeft.x, topLeft.y + 10);
                 break;
         }
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public void setPieceType(PieceType pieceType) {
+        this.pieceType = pieceType;
+    }
+
+    public Point getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Point coordinate) {
+        this.coordinate = coordinate;
     }
 }

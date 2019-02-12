@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Game extends Environment implements GridIntf, GameIntf {
 
     private ChessBoard chessBoard;
-    private boolean highlightBoard;
+    private boolean highlightBoard = false;
     private ArrayList<Piece> chessPieces;
 
     public Game() { }
@@ -70,7 +70,7 @@ public class Game extends Environment implements GridIntf, GameIntf {
 
     @Override
     public void environmentMouseMoved(MouseEvent e) {
-        highlightBoard = chessBoard.mouseInBoard() ? true : false;
+        highlightBoard = chessBoard.mouseOverBoard();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Game extends Environment implements GridIntf, GameIntf {
         if (chessBoard != null) {
             chessBoard.draw(g2);
             if (highlightBoard) {
-                chessBoard.highlight(g2);
+                chessBoard.highlightCell(g2);
             }
         }
         if (chessPieces != null) {

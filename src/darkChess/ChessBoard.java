@@ -39,16 +39,29 @@ public class ChessBoard extends Grid {
         g2.drawRect(getAnchor().x, getAnchor().y, getColumns() * getxDimension(), getRows() * getyDimension());
     }
 
+    public void highlightCell(Graphics2D g2) {
+        g2.setColor(Color.GREEN);
+        if (gameIntf.getMouseLocation() != null) {
+            Point mouseCell = getCell(gameIntf.getMouseLocation());
+            g2.drawRect(getAnchor().x + mouseCell.x * getxDimension(), getAnchor().y + mouseCell.y * getyDimension(),
+                    getxDimension(), getyDimension());
+        }
+    }
+
     @Override
     public Point getSystemCoordinates(Point coordinate) {
         return super.getSystemCoordinates(coordinate);
+    }
+
+    private Point getCell(Point coordinate) {
+        return new Point((coordinate.x - getAnchor().x) / getxDimension(), (coordinate.y - getAnchor().y) / getyDimension());
     }
 
     /**
      * Is the cursor within the confines of the board?
      * @return whether or not the cursor is in the area with the board
      */
-    public boolean mouseInBoard() {
+    public boolean mouseOverBoard() {
         if (gameIntf.getMouseLocation() != null) {
             Point mouseLocation = gameIntf.getMouseLocation();
             if (mouseLocation.x >= getAnchor().x && mouseLocation.x <= getAnchor().x + getColumns() * getxDimension()) {
