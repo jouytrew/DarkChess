@@ -34,18 +34,24 @@ public class ChessBoard extends Grid {
         }
     }
 
-    public void highlight(Graphics2D g2) {
+    public void frame(Graphics2D g2) {
         g2.setColor(Color.GREEN);
         g2.drawRect(getAnchor().x, getAnchor().y, getColumns() * getxDimension(), getRows() * getyDimension());
     }
 
-    public void highlightCell(Graphics2D g2) {
+    public void frameCell(Graphics2D g2) {
         g2.setColor(Color.GREEN);
         if (gameIntf.getMouseLocation() != null) {
-            Point mouseCell = getCell(gameIntf.getMouseLocation());
+            Point mouseCell = getCellCoordinates(gameIntf.getMouseLocation());
             g2.drawRect(getAnchor().x + mouseCell.x * getxDimension(), getAnchor().y + mouseCell.y * getyDimension(),
                     getxDimension(), getyDimension());
         }
+    }
+
+    public void highlightCell(Graphics2D g2, Point cellCoordinate) {
+        g2.setColor(new Color(0, 255, 255, 80));
+        Point cellAnchor = getSystemCoordinates(cellCoordinate);
+        g2.fillRect(cellAnchor.x, cellAnchor.y, getxDimension(), getyDimension());
     }
 
     @Override
@@ -53,7 +59,7 @@ public class ChessBoard extends Grid {
         return super.getSystemCoordinates(coordinate);
     }
 
-    private Point getCell(Point coordinate) {
+    public Point getCellCoordinates(Point coordinate) {
         return new Point((coordinate.x - getAnchor().x) / getxDimension(), (coordinate.y - getAnchor().y) / getyDimension());
     }
 

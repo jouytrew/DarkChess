@@ -147,10 +147,30 @@ public abstract class Environment extends JPanel {
 //  </editor-fold>
 
     //   <editor-fold defaultstate="collapsed" desc="Mouse Event Handlers">
-    private class EnvironmentMouseListener extends MouseAdapter {
+    private class EnvironmentMouseListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
             environmentMouseClicked(e);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            environmentMousePressed(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            environmentMouseReleased(e);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            environmentMouseEntered(e);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            environmentMouseExited(e);
         }
     }
 
@@ -166,6 +186,10 @@ public abstract class Environment extends JPanel {
         }
     }
 
+    protected abstract void environmentMouseExited(MouseEvent e);
+    protected abstract void environmentMouseEntered(MouseEvent e);
+    protected abstract void environmentMouseReleased(MouseEvent e);
+    protected abstract void environmentMousePressed(MouseEvent e);
     public abstract void environmentMouseDragged(MouseEvent e);
     public abstract void environmentMouseMoved(MouseEvent e);
     public abstract void environmentMouseClicked(MouseEvent e);

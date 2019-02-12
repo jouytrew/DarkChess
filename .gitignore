@@ -6,3 +6,7 @@
 out/production/DarkChess/darkChess/Game\.class
 
 out/production/DarkChess/darkChess/ChessBoard\.class
+
+out/production/DarkChess/darkChess/Piece\.class
+
+*.class

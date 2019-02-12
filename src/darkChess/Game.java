@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class Game extends Environment implements GridIntf, GameIntf {
 
     private ChessBoard chessBoard;
-    private boolean highlightBoard = false;
+    private boolean mouseInBoard = false;
     private ArrayList<Piece> chessPieces;
+    private Point selectedCell;
 
     public Game() { }
 
@@ -46,13 +47,17 @@ public class Game extends Environment implements GridIntf, GameIntf {
         chessPieces.add(new Piece(Team.BLACK, PieceType.BISHOP, new Point(5, 0), this));
         chessPieces.add(new Piece(Team.BLACK, PieceType.KNIGHT, new Point(6, 0), this));
         chessPieces.add(new Piece(Team.BLACK, PieceType.ROOK, new Point(7, 0), this));
+
     }
 
+    //<editor-fold desc="Timer Handler">
     @Override
     public void timerTaskHandler() {
 
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Key Handlers">
     @Override
     public void keyPressedHandler(KeyEvent e) {
 
@@ -60,6 +65,32 @@ public class Game extends Environment implements GridIntf, GameIntf {
 
     @Override
     public void keyReleasedHandler(KeyEvent e) {
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Mouse Handlers">
+    @Override
+    protected void environmentMouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    protected void environmentMouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    protected void environmentMouseReleased(MouseEvent e) {
+        if (chessBoard != null) {
+            if (chessBoard.mouseOverBoard()) {
+                selectedCell = chessBoard.getCellCoordinates(getMouseLocation());
+            }
+        }
+    }
+
+    @Override
+    protected void environmentMousePressed(MouseEvent e) {
 
     }
 
@@ -70,13 +101,13 @@ public class Game extends Environment implements GridIntf, GameIntf {
 
     @Override
     public void environmentMouseMoved(MouseEvent e) {
-        highlightBoard = chessBoard.mouseOverBoard();
+        mouseInBoard = chessBoard.mouseOverBoard();
     }
 
     @Override
     public void environmentMouseClicked(MouseEvent e) {
-
     }
+    //</editor-fold>
 
     @Override
     public void paintEnvironment(Graphics g) {
@@ -93,8 +124,12 @@ public class Game extends Environment implements GridIntf, GameIntf {
 
         if (chessBoard != null) {
             chessBoard.draw(g2);
-            if (highlightBoard) {
-                chessBoard.highlightCell(g2);
+            if (mouseInBoard) {
+                chessBoard.frameCell(g2);
+            }
+            if (selectedCell != null) {
+                // TODO: check if the cell contains a piece and highlight the cells that it can move to
+                chessBoard.highlightCell(g2, selectedCell);
             }
         }
         if (chessPieces != null) {
